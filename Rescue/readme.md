@@ -1,1 +1,1 @@
-{\rtf1}
+Team 15 - Code for Good. 
