@@ -106,6 +106,40 @@ app.post('/logout', function(req, res) {
 	});
 });
 
+app.get('/communication', function(req, res) {
+	// renderPage('Communication', 'communication.pug', res);
+	// counts = [];
+	// firebase.database().ref('Regions/location_id_here/briefs').on('value',function(snap) {
+	// 	keys = [];
+	//     snap.forEach(function(item) {
+	//         var itemVal = item.val();
+	//         keys.push(itemVal);
+	//     });
+	//     for (i=0; i < keys.length; i++) {
+	//         counts.push(keys[i].wordcount);
+	//     }   
+	// });
+	// console.log(counts);
+	res.render('communication.pug', {
+		title: 'Communication',
+		// briefs: firebase.database().ref('Regions/location_id_here/briefs')
+	});
+})
+
+app.get('/analysis', function(req, res) {
+	// renderPage('Analysis', 'analysis.pug', res);
+	res.render('analysis.pug', {
+		title: 'Analysis'
+	});
+})
+
+app.get('/organization', function(req, res) {
+	// renderPage('Organization', 'organization.pug', res);
+	res.render('organization.pug', {
+		title: 'Organization'
+	});
+})
+
 app.listen(3000, function() {
 	console.log('Server started on port 3000');
 });
