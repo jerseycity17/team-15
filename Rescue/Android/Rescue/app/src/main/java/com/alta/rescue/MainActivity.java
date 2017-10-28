@@ -193,7 +193,7 @@ public class MainActivity extends EasyLocationAppCompatActivity {
 
     @Override
     public void onLocationReceived(Location location) {
-        Log.e("location recieved", "yay");
+        Log.e("location received", "yay");
         safeRef.setValue(0);
         pinglocationlat.setValue(location.getLatitude());
         pinglocationlong.setValue(location.getLongitude());

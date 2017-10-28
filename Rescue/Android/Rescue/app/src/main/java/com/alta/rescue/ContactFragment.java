@@ -72,9 +72,7 @@ public class ContactFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         String location = PreferenceManager.getDefaultSharedPreferences(context).getString("Country", "location_id_here");
-        Log.e("Country", location);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        PreferenceManager.getDefaultSharedPreferences(context).getString("Country", "defaultStringIfNothingFound");
         DatabaseReference myRef = database.getReference("Regions/"+location+"/contacts");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

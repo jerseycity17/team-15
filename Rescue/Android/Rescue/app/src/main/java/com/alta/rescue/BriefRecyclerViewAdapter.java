@@ -51,16 +51,7 @@ public class BriefRecyclerViewAdapter extends RecyclerView.Adapter<BriefRecycler
         holder.dateView.setText("Date Posted: "+briefs.get(position).getDate().toString());
         holder.textView.setText(briefs.get(position).getText());
         holder.urgency.setBackgroundColor(ContextCompat.getColor(context,getColor(briefs.get(position).getUrgency())));
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                }
-//            }
-//        });
+
     }
 
     @Override

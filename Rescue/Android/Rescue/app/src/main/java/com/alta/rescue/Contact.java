@@ -5,6 +5,10 @@ package com.alta.rescue;
  */
 
 public class Contact {
+    public Contact(){
+
+    }
+
     public Contact(String name, String occupation, String phone) {
         this.name = name;
         this.occupation = occupation;

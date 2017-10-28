@@ -58,7 +58,7 @@ public class BriefFragment extends Fragment {
         Context context = view.getContext();
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        String location = PreferenceManager.getDefaultSharedPreferences(context).getString("Country", "location_id_here");
+        String location = PreferenceManager.getDefaultSharedPreferences(context).getString("Country", "Nigeria");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Regions/"+location+"/briefs");
         myRef.addValueEventListener(new ValueEventListener() {
