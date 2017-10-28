@@ -123,6 +123,18 @@ app.get('/communication', function(req, res) {
 	    let c = 0;
 	    let children = [];
 	    snapshot.forEach(function(childSnapshot) {
+			var urgency = "";
+			switch (childSnapshot.val().urgency)
+			{
+				case 1:
+					urgency = "Mild";
+				case 2:
+					urgency = "Moderate";
+				case 3:
+					urgency = "Emergency!";
+			}
+
+			childSnapshot.val().urgency_str = urgency;
 	        children.push(childSnapshot.val());    
 	        c++;
 	        
