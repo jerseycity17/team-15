@@ -59,15 +59,15 @@ html(lang='en')
                     .sidebar-nav.navbar-collapse
                         ul#side-menu.nav
                             li
-                                a(href='index.html')
+                                a(href='/communication')
                                     i.fa.fa-comments.fa-fw
                                     |  Communication
                             li
-                                a(href='tables.html')
+                                a(href='/analysis')
                                     i.fa.fa-line-chart.fa-fw
                                     |  Analysis
                             li
-                                a(href='forms.html')
+                                a(href='/organization')
                                     i.fa.fa-users.fa-fw
                                     |  Organization
                     // /.sidebar-collapse
@@ -75,10 +75,17 @@ html(lang='en')
             #page-wrapper
                 .row
                     .col-lg-12
-                        h1.page-header Dashboard
+                        h1.page-header #{title}
                     // /.col-lg-12
                 // /.row
-                #{content}
+                
+                // CODE GOES HERE
+
+
+
+                // ----CODE ENDS HERE----
+
+
             // /#page-wrapper
         // /#wrapper
         // jQuery
@@ -87,10 +94,6 @@ html(lang='en')
         script(src='./vendor/bootstrap/js/bootstrap.min.js')
         // Metis Menu Plugin JavaScript
         script(src='./vendor/metisMenu/metisMenu.min.js')
-        // Morris Charts JavaScript
-        script(src='./vendor/raphael/raphael.min.js')
-        script(src='./vendor/morrisjs/morris.min.js')
-        script(src='./data/morris-data.js')
         // Custom Theme JavaScript
         script(src='./dist/js/sb-admin-2.js')
 
