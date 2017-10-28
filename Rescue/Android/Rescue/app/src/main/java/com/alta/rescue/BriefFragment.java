@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static android.content.ContentValues.TAG;
 
@@ -71,6 +72,7 @@ public class BriefFragment extends Fragment {
                     Briefing briefing = messageSnapshot.getValue(Briefing.class);
                     briefs.add(briefing);
                 }
+                Collections.reverse(briefs);
                 recyclerView.setAdapter(new BriefRecyclerViewAdapter(briefs, getActivity(), mListener));
 
             }

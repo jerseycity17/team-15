@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static android.content.ContentValues.TAG;
 
@@ -84,6 +85,7 @@ public class ContactFragment extends Fragment {
                     Contact contact = messageSnapshot.getValue(Contact.class);
                     contacts.add(contact);
                 }
+                Collections.reverse(contacts);
                 recyclerView.setAdapter(new ContactRecyclerViewAdapter(contacts, getActivity(), mListener));
 
             }
