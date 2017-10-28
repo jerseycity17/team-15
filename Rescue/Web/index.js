@@ -134,6 +134,36 @@ app.post('/logout', function(req, res) {
 	});
 });
 
+app.post('/create_brief', function(req, res) {
+	var m = new Date();
+	var time =
+    m.getUTCFullYear() + "" +
+    ("0" + (m.getUTCMonth()+1)).slice(-2) + "" +
+    ("0" + m.getUTCDate()).slice(-2);
+	// var time = "" + date.getYear() + "" + date.getHours() + "" + date.getMinutes();
+	var title = req.body.title;
+	var text = req.body.msg;
+	var priority = req.body.priority;
+	var location = req.body.location;
+	console.log(time + ", " + text + ", " + priority + ", " + location);
+	var newBrief = firebase.database().ref('Regions/' + location +'/briefs').push();
+	newBrief.set({
+		title: title,
+		date: parseInt(time),
+		text: text,
+		urgency: parseInt(priority)
+	});
+	res.render('communication.pug', {
+		title: 'Communication'
+	});
+});
+
+app.get('/new_brief', function(req, res) {
+	res.render('create_brief.pug', {
+		title: 'New Brief'
+	});
+});
+
 app.get('/communication', function(req, res) {
 	firebase.database().ref('Regions/location_id_here/briefs').once('value', function(snapshot)
 	{
