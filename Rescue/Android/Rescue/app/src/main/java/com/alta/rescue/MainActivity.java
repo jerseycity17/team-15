@@ -38,7 +38,9 @@ public class MainActivity extends EasyLocationAppCompatActivity {
     int currentview;
     TextView alert;
     DatabaseReference pingtime;
-    DatabaseReference pinglocation;
+    DatabaseReference pinglocationlong;
+    DatabaseReference pinglocationlat;
+
     DatabaseReference safeRef;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -82,8 +84,10 @@ public class MainActivity extends EasyLocationAppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         safeRef = database.getReference("Users/" + user.getUid().toString() + "/safetyCheck");
-        pinglocation = database.getReference("Users/" + user.getUid().toString() + "/last_ping");
-        pingtime = database.getReference("Users/" + user.getUid().toString() + "/last_location");
+        pingtime = database.getReference("Users/" + user.getUid().toString() + "/last_ping");
+        pinglocationlat = database.getReference("Users/" + user.getUid().toString() + "/last_location/latitude");
+        pinglocationlong = database.getReference("Users/" + user.getUid().toString() + "/last_location/longitude");
+
 
 
         safeRef.addValueEventListener(new ValueEventListener() {
@@ -179,9 +183,11 @@ public class MainActivity extends EasyLocationAppCompatActivity {
 
     @Override
     public void onLocationReceived(Location location) {
+        Log.e("location recieved", "yay");
         safeRef.setValue(0);
-        pinglocation.setValue(location);
-        pingtime.setValue(new SimpleDateFormat("YYYYMMDD").format(java.util.Calendar.getInstance().getTime()));
+        pinglocationlat.setValue(location.getLatitude());
+        pinglocationlong.setValue(location.getLongitude());
+        pingtime.setValue(new SimpleDateFormat("yyyyMMdd").format(java.util.Calendar.getInstance().getTime()));
     }
 
     @Override
