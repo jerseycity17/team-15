@@ -116,7 +116,6 @@ public class MainActivity extends EasyLocationAppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int needsCheck = Integer.valueOf(dataSnapshot.getValue().toString());
-                Log.e("needs check is ", Integer.toString(needsCheck));
                 if (needsCheck==1){
                     alert.setVisibility(View.VISIBLE);
                 }else{
@@ -126,7 +125,6 @@ public class MainActivity extends EasyLocationAppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
             }
         });
     }
