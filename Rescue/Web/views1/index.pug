@@ -1,0 +1,35 @@
+doctype html  
+html(lang='en') 
+	include partials/header.pug
+	body
+		h1= title
+		h2 Login
+		form(method='POST' action='/login')
+			label Email
+			input(type='text' name='email')
+			br
+			label Password
+			input(type='password' name='password')
+			br
+			br
+			input(type='submit' value='Login')
+		br
+		h2 Register
+		form(method='POST' action='/register')
+			label First Name
+			input(type='text' name='first')
+			br
+			label Last Name
+			input(type='text' name='last')
+			br
+			label Phone Number
+			input(type='text' name='phone')
+			br
+			label Email
+			input(type='text' name='email')
+			br
+			label Password
+			input(type='password' name='password')
+			br
+			br
+			input(type='submit' value='Login')
