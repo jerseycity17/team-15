@@ -78,45 +78,51 @@ html(lang='en')
                         h1.page-header #{title}
                     // /.col-lg-12
                 // /.row
-                // /.row
+                
+                // CODE GOES HERE
+
                 .row
-                    .col-lg-8
-                        .panel.panel-default
-                            // /.panel-heading
-                            .panel-header
-                                a(href='/new_brief')
-                                    i.fa.fa-plus.fa-fw
-                                    |  Add Brief
-                            .panel-body
-                                ul.timeline
-                                    li
-                                        .timeline-badge
-                                        .timeline-panel
-                                            .timeline-heading
-                                                h4.timeline-title High Risk of Terrorist Attacks
-                                                p
-                                                    small.text-muted
-                                                        i.fa.fa-clock-o
-                                                        |  11 hours ago via Twitter
-                                            .timeline-body
-                                                p
-                                                    | Advisory System: High
-                                                    This is a test of Rescue's emergency alert system. If you have received this in error, send email to rescue.org
-                                    li.timeline-inverted
-                                        .timeline-badge.warning
-                                        .timeline-panel
-                                            .timeline-heading
-                                                h4.timeline-title Significant Risk of Terrorist Attacks
-                                                p
-                                                    small.text-muted
-                                                        i.fa.fa-clock-o
-                                                        |  11 hours ago via Twitter
-                                            .timeline-body
-                                                p
-                                                    | Advisory System: Elevated \nEMERGENCY! A new threat of terrorist attack has occured.
-                            // /.panel-body
-                        // /.panel
-                    // /.col-lg-8
+                .col-lg-12
+                    .panel.panel-default
+                        .panel-body
+                            form(method='POST', action='/create_brief')
+                                | Alert Title:
+                                br
+                                input(type='text', name='title')
+                                br
+                                | Message:
+                                br
+                                input(type='text', name='msg')
+                                br
+                                |   Alert Status:
+                                br
+                                select(name='priority')
+                                    option(value='0', selected) 1 Low Priority
+                                    option(value='1') 2
+                                    option(value='2') 3
+                                    option(value='3') 4
+                                    option(value='4') 5 High Priority
+                                br
+                                |   Location to send to:
+                                br
+                                select(name='location')
+                                    option(value='location_id_here', selected) Location id here
+                                    option(value='Serbia') Serbia
+                                    option(value='Liberia') Liberia
+                                    option(value='Somalia') Somalia
+                                    option(value='Jordan') Jordan
+                                br
+                                br
+                                input(type='submit', value='Submit')
+                        // /.panel-body
+                    // /.panel
+                // /.col-lg-12
+
+
+
+                // ----CODE ENDS HERE----
+
+
             // /#page-wrapper
         // /#wrapper
         // jQuery
