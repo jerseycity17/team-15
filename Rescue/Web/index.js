@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 const firebase = require('firebase');
+const fs = require('fs');
 
 var app = express();
 
@@ -23,6 +24,7 @@ var config = {
   databaseURL: "https://rescue-cf4dc.firebaseio.com",
   // storageBucket: "<BUCKET>.appspot.com",
 };
+
 firebase.initializeApp(config);
 
 // var database = firebase.database();
@@ -34,15 +36,29 @@ firebase.initializeApp(config);
 //   // ...
 // });
 
+function renderPage(title, filename, res) {
+	fs.readFile('views/' + filename, 'utf8', function (err, data) {
+	    if (err) throw err;
+	    // var fn = jade.compile(data);
+	    // var html = fn({name:'Oleg'});
+	    // console.log(html);
+	    res.render('page.pug', {
+			title: title,
+			content: data
+		});
+	});
+}
+
 app.get('/', function(req, res) {
 	// res.send('Hello World');
-	res.render('page', {
+	res.render('login.pug', {
 		title: 'Login'
 	});
 	// res.sendfile(__dirname + '/views/index.html');
 });
 
 app.post('/login', function(req, res) {
+	console.log("pressed login");
 	var email = req.body.email;
 	var password = req.body.password;
 	firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
@@ -50,9 +66,9 @@ app.post('/login', function(req, res) {
 	    var errorCode = error.code;
 	    var errorMessage = error.message;
 	});
-	res.render('briefings', {title: 'Briefings'});
 	console.log("Logged in as " + email);
-})
+	renderPage('Communication', 'communication.pug', res);
+});
 
 app.post('/register', function(req, res) {
 	var email = req.body.email;
@@ -72,10 +88,11 @@ app.post('/register', function(req, res) {
 			phone: phone
 		});
 	});
+	renderPage('Communication', 'communication.pug', res);
 
-	res.render('briefings', {title: 'Briefings'});
+	// res.render('briefings', {title: 'Briefings'});
 	console.log("Created new user with email " + email);
-})
+});
 
 app.post('/logout', function(req, res) {
 	firebase.auth().signOut().then(function() {
@@ -84,8 +101,11 @@ app.post('/logout', function(req, res) {
 	}).catch(function(error) {
 		// An error happened.
 	});
-})
+	res.render('login.pug', {
+		title: 'Login'
+	});
+});
 
 app.listen(3000, function() {
 	console.log('Server started on port 3000');
-})
+});
