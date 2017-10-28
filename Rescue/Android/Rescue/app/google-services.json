@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "380236083170",
+    "firebase_url": "https://rescue-cf4dc.firebaseio.com",
+    "project_id": "rescue-cf4dc",
+    "storage_bucket": "rescue-cf4dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380236083170:android:58c284c7fa229f01",
+        "android_client_info": {
+          "package_name": "com.alta.rescue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380236083170-gmpqdht7dl6lg9tg7o6477vcif0jsnsh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alta.rescue",
+            "certificate_hash": "b4830bf9f0af4c6e6589628357d3b31bf7f47b12"
+          }
+        },
+        {
+          "client_id": "380236083170-ilr0nt5pvb90fkdsufka5e2mqn1ijaeg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGydTtgiSyeD73QruzZ9tDp5pOgo7MtWA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380236083170-ilr0nt5pvb90fkdsufka5e2mqn1ijaeg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

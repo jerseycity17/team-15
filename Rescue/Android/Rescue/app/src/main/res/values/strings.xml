@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Rescue</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Briefs</string>
+    <string name="logout">Logout</string>
+    <string name="title_dashboard">Contacts</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

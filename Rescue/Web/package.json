@@ -1,0 +1,17 @@
+{
+  "name": "expresstut",
+  "version": "1.0.0",
+  "description": "express tutorial app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sunwoo Yim",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "firebase": "^4.6.0",
+    "pug": "^2.0.0-rc.4"
+  }
+}
