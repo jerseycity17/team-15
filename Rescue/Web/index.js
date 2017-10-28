@@ -72,7 +72,7 @@ app.post('/login', function(req, res) {
 	});
 	console.log("Logged in as " + email);
 	// renderPage('Communication', 'communication.pug', res);
-	res.render('communication.pug', {
+	res.render('communication1.pug', {
 		title: 'Communication',
 	});
 });
@@ -97,7 +97,7 @@ app.post('/register', function(req, res) {
 	});
 	// renderPage('Communication', 'communication.pug', res);
 
-	res.render('communication.pug', {
+	res.render('communication1.pug', {
 		title: 'Communication',
 	});
 
@@ -114,6 +114,43 @@ app.post('/logout', function(req, res) {
 	});
 	res.render('login.pug', {
 		title: 'Login'
+	});
+});
+
+app.get('/communication', function(req, res) {
+	// firebase.database().ref('Regions/location_id_here/briefs').once('value', function(snapshot)
+	// {
+	//     let c = 0;
+	//     let children = [];
+	//     snapshot.forEach(function(childSnapshot) {
+	// 		var urgency = "";
+	// 		switch (childSnapshot.val().urgency)
+	// 		{
+	// 			case 1:
+	// 				urgency = "Mild";
+	// 			case 2:
+	// 				urgency = "Moderate";
+	// 			case 3:
+	// 				urgency = "Emergency!";
+	// 		}
+
+	// 		childSnapshot.val().urgency_str = urgency;
+	//         children.push(childSnapshot.val());    
+	//         c++;
+	        
+	//         if (c >= childSnapshot.numChildren())
+	//         {
+	// 			res.render('communication.pug', {
+	// 				title: 'Communication',
+	//                 briefs: children
+	// 			});
+	//         }
+	//     });
+	    
+	// });
+	res.render('communication1.pug', {
+		title: 'Communication',
+		// briefs: firebase.database().ref('Regions/location_id_here/briefs')
 	});
 });
 
@@ -136,7 +173,7 @@ app.post('/create_brief', function(req, res) {
 		text: text,
 		urgency: parseInt(priority)
 	});
-	res.render('communication.pug', {
+	res.render('communication1.pug', {
 		title: 'Communication'
 	});
 });
@@ -147,49 +184,24 @@ app.get('/new_brief', function(req, res) {
 	});
 });
 
-app.get('/communication', function(req, res) {
-	firebase.database().ref('Regions/location_id_here/briefs').once('value', function(snapshot)
-	{
-	    let c = 0;
-	    let children = [];
-	    snapshot.forEach(function(childSnapshot) {
-			var urgency = "";
-			switch (childSnapshot.val().urgency)
-			{
-				case 1:
-					urgency = "Mild";
-				case 2:
-					urgency = "Moderate";
-				case 3:
-					urgency = "Emergency!";
-			}
-
-			childSnapshot.val().urgency_str = urgency;
-	        children.push(childSnapshot.val());    
-	        c++;
-	        
-	        if (c >= childSnapshot.numChildren())
-	        {
-				res.render('communication.pug', {
-					title: 'Communication',
-	                briefs: children
-				});
-	        }
-	    });
-	    
-	});
-	// res.render('communication.pug', {
-	// 	title: 'Communication',
-	// 	// briefs: firebase.database().ref('Regions/location_id_here/briefs')
-	// });
-})
-
 app.get('/analysis', function(req, res) {
 	// renderPage('Analysis', 'analysis.pug', res);
 	res.render('analysis.pug', {
 		title: 'Analysis'
 	});
-})
+});
+
+app.get('/ping_user', function(req, res) {
+	console.log('pinging');
+	var uId = req.query.id;
+	var newBrief = firebase.database().ref('Users/' + uId).update({
+		safetyCheck: 1,
+	});
+	console.log('pinged user' + uId);
+	res.render('organization.pug', {
+		title: 'Organization'
+	});
+});
 
 app.get('/organization', function(req, res) {
 	// renderPage('Organization', 'organization.pug', res);
