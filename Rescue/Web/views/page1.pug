@@ -1,0 +1,10 @@
+div(class="panel panel-default")
+    div(class="panel-body")
+        input#location.form-control(type='text', placeholder='location')
+        input#status.form-control(type='text', placeholder='alert status')
+        form(method='POST' action='/alert')
+            div.input-group
+            label(for='name') Alert Msg:
+            input#name.form-control(type='text', placeholder='first and last' name='msg')
+
+            button(id='send') Send alert

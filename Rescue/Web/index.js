@@ -6,7 +6,7 @@ const firebase = require('firebase');
 var app = express();
 
 // View Engine
-app.set('view engine', 'html');
+app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // Body Parser Middleware
@@ -39,7 +39,11 @@ app.get('/', function(req, res) {
 	// res.render('index', {
 	// 	title: 'Login'
 	// });
-	res.sendfile(__dirname + '/views/index.html');
+	res.render('index');
+});
+
+app.post('/alert', function(req, res) {
+	res.send(req.body.msg);
 });
 
 app.post('/login', function(req, res) {
