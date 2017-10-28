@@ -4,4 +4,8 @@
     <item android:id="@+id/logout"
         android:title="@string/logout"
         app:showAsAction="never"/>
+    <item android:id="@+id/ping"
+        android:title="Ping"
+        android:icon="@drawable/ic_action_my_location"
+        app:showAsAction="always"/>
 </menu>

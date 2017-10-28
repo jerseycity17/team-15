@@ -1,18 +1,22 @@
 package com.alta.rescue;
 
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.location.LocationRequest;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,14 +25,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.yayandroid.locationmanager.LocationManager;
+import com.vishalsojitra.easylocation.EasyLocationAppCompatActivity;
+import com.vishalsojitra.easylocation.EasyLocationRequest;
+import com.vishalsojitra.easylocation.EasyLocationRequestBuilder;
 
-public class MainActivity extends AppCompatActivity{
+import java.text.SimpleDateFormat;
+
+public class MainActivity extends EasyLocationAppCompatActivity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
     BottomNavigationView navigation;
     int currentview;
     TextView alert;
+    DatabaseReference pingtime;
+    DatabaseReference pinglocation;
+    DatabaseReference safeRef;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -69,7 +81,11 @@ public class MainActivity extends AppCompatActivity{
         }
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference safeRef = database.getReference("Users/" + user.getUid().toString() + "/safetyCheck");
+        safeRef = database.getReference("Users/" + user.getUid().toString() + "/safetyCheck");
+        pinglocation = database.getReference("Users/" + user.getUid().toString() + "/last_ping");
+        pingtime = database.getReference("Users/" + user.getUid().toString() + "/last_location");
+
+
         safeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -118,6 +134,17 @@ public class MainActivity extends AppCompatActivity{
                 finish();
                 startActivity(i);
                 return true;
+            case R.id.ping:
+                LocationRequest locationRequest = new LocationRequest()
+                        .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+                        .setInterval(5000)
+                        .setFastestInterval(5000);
+                EasyLocationRequest easyLocationRequest = new EasyLocationRequestBuilder()
+                        .setLocationRequest(locationRequest)
+                        .setFallBackToLastLocationTime(3000)
+                        .build();
+                requestSingleLocationFix(easyLocationRequest);
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -136,5 +163,37 @@ public class MainActivity extends AppCompatActivity{
         // call superclass to save any view hierarchy
         super.onSaveInstanceState(outState);
     }
+
+
+    @Override
+    public void onLocationPermissionGranted() {
+        Log.e("location perm granted", "yay");
+
+    }
+
+    @Override
+    public void onLocationPermissionDenied() {
+        Log.e("location perm failed", "boo");
+
+    }
+
+    @Override
+    public void onLocationReceived(Location location) {
+        safeRef.setValue(0);
+        pinglocation.setValue(location);
+        pingtime.setValue(new SimpleDateFormat("YYYYMMDD").format(java.util.Calendar.getInstance().getTime()));
+    }
+
+    @Override
+    public void onLocationProviderEnabled() {
+        Log.e("location prov enabled", "yay");
+    }
+
+    @Override
+    public void onLocationProviderDisabled() {
+        Log.e("location prov disabled", "boo");
+
+    }
+
 }
 
