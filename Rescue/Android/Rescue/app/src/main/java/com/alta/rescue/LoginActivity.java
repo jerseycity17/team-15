@@ -2,6 +2,7 @@ package com.alta.rescue;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +20,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
+            startActivity();
             // User is signed in
         } else {
             startActivityForResult(
@@ -44,8 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // Successfully signed in
             if (resultCode == RESULT_OK) {
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+                startActivity();
             } else {
                 return;
                 // Sign in failed
@@ -66,5 +66,10 @@ public class LoginActivity extends AppCompatActivity {
 //                }
             }
         }
+    }
+
+    public void startActivity(){
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }

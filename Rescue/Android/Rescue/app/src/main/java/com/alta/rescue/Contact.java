@@ -7,5 +7,5 @@ package com.alta.rescue;
 public class Contact {
     public String name;
     public String occupation;
-    public Long phone;
+    public String phone;
 }

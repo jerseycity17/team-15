@@ -51,9 +51,10 @@ function renderPage(title, filename, res) {
 
 app.get('/', function(req, res) {
 	// res.send('Hello World');
-	res.render('login.pug', {
-		title: 'Login'
-	});
+	// res.render('login.pug', {
+	// 	title: 'Login'
+	// });
+	renderPage('some title', 'content.pug', res);
 	// res.sendfile(__dirname + '/views/index.html');
 });
 

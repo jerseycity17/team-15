@@ -16,4 +16,5 @@ public class Region {
     String name;
     ArrayList<Briefing> briefs;
     ArrayList<String> users;
+    ArrayList<Contact> contacts;
 }
