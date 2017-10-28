@@ -56,20 +56,33 @@ app.post('/login', function(req, res) {
 app.post('/register', function(req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
+	var userId = "dummyuserid";
 	// login to firebase
-	firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-		// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		return;
+	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
+		userId = user.uid;
+		var first = req.body.first;
+		var last = req.body.last;
+		var phone = req.body.phone;
+
+		// add user information to database
+		firebase.database().ref('Users/' + userId).set({
+			first: first,
+			last: last,
+			phone: phone
+		});
 	});
-	var first = req.body.first;
-	var last = req.body.last;
-	var phone = req.body.phone;
-	
-	// add user information to database
+
 	res.render('briefings', {title: 'Briefings'});
 	console.log("Created new user with email " + email);
+})
+
+app.post('/logout', function(req, res) {
+	firebase.auth().signOut().then(function() {
+	// Sign-out successful.
+	console.log("Successfully signed out")
+	}).catch(function(error) {
+		// An error happened.
+	});
 })
 
 app.listen(3000, function() {
