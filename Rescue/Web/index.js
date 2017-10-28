@@ -72,8 +72,25 @@ app.post('/login', function(req, res) {
 	});
 	console.log("Logged in as " + email);
 	// renderPage('Communication', 'communication.pug', res);
-	res.render('communication.pug', {
-		title: 'Communication',
+	firebase.database().ref('Regions/location_id_here/briefs').once('value', function(snapshot)
+	{
+	    let c = 0;
+		let children = [];
+		let done = false;
+	    snapshot.forEach(function(childSnapshot) {
+	        children.push(childSnapshot.val());    
+	        c++;
+	        
+	        if (c >= childSnapshot.numChildren() && !done)
+	        {
+				done = true;
+				res.render('communication.pug', {
+					title: 'Communication',
+	                briefs: children
+				});
+	        }
+	    });
+	    
 	});
 });
 
@@ -153,8 +170,26 @@ app.post('/create_brief', function(req, res) {
 		text: text,
 		urgency: parseInt(priority)
 	});
-	res.render('communication.pug', {
-		title: 'Communication'
+
+	firebase.database().ref('Regions/location_id_here/briefs').once('value', function(snapshot)
+	{
+	    let c = 0;
+		let children = [];
+		let done = false;
+	    snapshot.forEach(function(childSnapshot) {
+	        children.push(childSnapshot.val());    
+	        c++;
+	        
+	        if (c >= childSnapshot.numChildren() && !done)
+	        {
+				done = true;
+				res.render('communication.pug', {
+					title: 'Communication',
+	                briefs: children
+				});
+	        }
+	    });
+	    
 	});
 });
 
@@ -204,6 +239,18 @@ app.get('/organization', function(req, res) {
 		title: 'Organization'
 	});
 })
+
+app.get('/ping_user', function(req, res) {
+	console.log('pinging');
+	var uId = req.query.id;
+	var newBrief = firebase.database().ref('Users/' + uId).update({
+		safetyCheck: 1,
+	});
+	console.log('pinged user' + uId);
+	res.render('organization.pug', {
+		title: 'Organization'
+	});
+});
 
 app.listen(3000, function() {
 	console.log('Server started on port 3000');
