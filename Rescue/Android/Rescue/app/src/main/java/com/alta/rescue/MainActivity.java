@@ -11,12 +11,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.yayandroid.locationmanager.LocationManager;
 
 public class MainActivity extends AppCompatActivity{
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity{
     private FirebaseAnalytics mFirebaseAnalytics;
     BottomNavigationView navigation;
     int currentview;
+    TextView alert;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -57,13 +62,30 @@ public class MainActivity extends AppCompatActivity{
         view.setBackgroundColor(ContextCompat.getColor(this,android.R.color.white));
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        alert=(TextView)findViewById(R.id.alert);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if (savedInstanceState == null) {
             navigation.setSelectedItemId(R.id.navigation_home);
         }
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userRef = database.getReference("Users/" + user.getUid().toString());
+        DatabaseReference safeRef = database.getReference("Users/" + user.getUid().toString() + "/safetyCheck");
+        safeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int needsCheck = Integer.valueOf(dataSnapshot.getValue().toString());
+                if (needsCheck==1){
+                    alert.setVisibility(View.VISIBLE);
+                }else{
+                    alert.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
         //userRef.child();
         //FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
  //       userRef.setValue(new Agent("David","Margolin",3472338802L,new LatLng(25.345345,23.23423),4489484L));

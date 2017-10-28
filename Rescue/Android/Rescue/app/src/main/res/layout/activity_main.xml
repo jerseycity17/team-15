@@ -8,6 +8,15 @@
     android:orientation="vertical"
     tools:context="com.alta.rescue.MainActivity">
 
+    <TextView
+        android:id="@+id/alert"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@android:color/white"
+        android:background="@color/red"
+        android:visibility="gone"
+        android:text="Ping Recieved! Please Check In." />
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
