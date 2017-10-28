@@ -47,10 +47,10 @@ public class BriefRecyclerViewAdapter extends RecyclerView.Adapter<BriefRecycler
     }
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.titleView.setText(briefs.get(position).title);
-        holder.dateView.setText("Date Posted: "+briefs.get(position).date.toString());
-        holder.textView.setText(briefs.get(position).text);
-        holder.urgency.setBackgroundColor(ContextCompat.getColor(context,getColor(briefs.get(position).urgency)));
+        holder.titleView.setText(briefs.get(position).getTitle());
+        holder.dateView.setText("Date Posted: "+briefs.get(position).getDate().toString());
+        holder.textView.setText(briefs.get(position).getText());
+        holder.urgency.setBackgroundColor(ContextCompat.getColor(context,getColor(briefs.get(position).getUrgency())));
 //        holder.mView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

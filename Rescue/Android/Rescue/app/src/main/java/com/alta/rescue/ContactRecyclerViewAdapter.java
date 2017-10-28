@@ -37,15 +37,15 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.mIdView.setText(contacts.get(position).name);
-        holder.mContentView.setText(contacts.get(position).occupation);
+        holder.mIdView.setText(contacts.get(position).getName());
+        holder.mContentView.setText(contacts.get(position).getOccupation());
 
         holder.call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("tel", contacts.get(position).phone, null));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("tel", contacts.get(position).getPhone(), null));
                 context.startActivity(intent);
 
             }
@@ -56,7 +56,7 @@ public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecy
             public void onClick(View v) {
                 // Notify the active callbacks interface (the activity, if the
                 // fragment is attached to one) that an item has been selected.
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", contacts.get(position).phone, null));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", contacts.get(position).getPhone(), null));
                 context.startActivity(intent);
             }
         });

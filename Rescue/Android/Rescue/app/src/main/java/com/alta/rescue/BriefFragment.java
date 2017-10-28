@@ -2,6 +2,7 @@ package com.alta.rescue;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,9 +58,9 @@ public class BriefFragment extends Fragment {
         Context context = view.getContext();
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        //TODO: dynamically change country.
+        String location = PreferenceManager.getDefaultSharedPreferences(context).getString("Country", "location_id_here");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Regions/location_id_here/briefs");
+        DatabaseReference myRef = database.getReference("Regions/"+location+"/briefs");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

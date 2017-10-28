@@ -49,21 +49,6 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 return;
                 // Sign in failed
-//                if (response == null) {
-//                    // User pressed back button
-//                    showSnackbar(R.string.sign_in_cancelled);
-//                    return;
-//                }
-//
-//                if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
-//                    showSnackbar(R.string.no_internet_connection);
-//                    return;
-//                }
-//
-//                if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-//                    showSnackbar(R.string.unknown_error);
-//                    return;
-//                }
             }
         }
     }
