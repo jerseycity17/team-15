@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 
 /**
- * Created by David Margolin on 10/27/2017.
+ * Created by Team Atlas]] on 10/27/2017.
  */
 
 public class Agent {

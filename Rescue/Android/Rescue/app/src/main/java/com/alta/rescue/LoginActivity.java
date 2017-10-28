@@ -2,15 +2,11 @@ package com.alta.rescue;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 startActivity();
             } else {
+                Log.e("Login fail", "sorry");
                 return;
                 // Sign in failed
             }
@@ -54,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void startActivity(){
+        Log.e("Login success", "completed");
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
