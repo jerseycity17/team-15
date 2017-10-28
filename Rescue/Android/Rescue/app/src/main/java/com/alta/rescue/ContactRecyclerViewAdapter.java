@@ -7,24 +7,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.alta.rescue.ContactFragment.OnListFragmentInteractionListener;
-import com.alta.rescue.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContactRecyclerViewAdapter.ViewHolder> {
+public class ContactRecyclerViewAdapter extends RecyclerView.Adapter<ContactRecyclerViewAdapter.ViewHolder> {
 
     private final OnListFragmentInteractionListener mListener;
     private ArrayList<Contact> contacts;
     private Context context;
 
-    public MyContactRecyclerViewAdapter(ArrayList<Contact> contacts, Context context, OnListFragmentInteractionListener listener) {
+    public ContactRecyclerViewAdapter(ArrayList<Contact> contacts, Context context, OnListFragmentInteractionListener listener) {
         mListener = listener;
         this.contacts = contacts;
         this.context = context;
@@ -48,7 +45,7 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
             public void onClick(View v) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-                Intent intent = new Intent(Intent.ACTION_NEW_OUTGOING_CALL, Uri.fromParts("tel", contacts.get(position).phone.toString(), null));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("tel", contacts.get(position).phone, null));
                 context.startActivity(intent);
 
             }
@@ -59,7 +56,7 @@ public class MyContactRecyclerViewAdapter extends RecyclerView.Adapter<MyContact
             public void onClick(View v) {
                 // Notify the active callbacks interface (the activity, if the
                 // fragment is attached to one) that an item has been selected.
-                Intent intent = new Intent(Intent.ACTION_SEND, Uri.fromParts("sms", contacts.get(position).phone.toString(), null));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", contacts.get(position).phone, null));
                 context.startActivity(intent);
             }
         });

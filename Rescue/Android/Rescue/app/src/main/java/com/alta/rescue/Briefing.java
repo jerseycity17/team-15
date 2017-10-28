@@ -1,6 +1,8 @@
 package com.alta.rescue;
 
 
+import java.util.ArrayList;
+
 public class Briefing {
     public Briefing(){
 

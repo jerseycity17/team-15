@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 <android.support.v7.widget.RecyclerView
-    android:id="@+id/list"
+    android:id="@+id/recycle"
     android:name="com.alta.rescue.ContactFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.alta.rescue.ContactFragment"
     tools:listitem="@layout/fragment_contact" />

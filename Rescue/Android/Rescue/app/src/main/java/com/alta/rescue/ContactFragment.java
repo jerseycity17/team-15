@@ -10,9 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.alta.rescue.dummy.DummyContent;
-import com.alta.rescue.dummy.DummyContent.DummyItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +34,8 @@ public class ContactFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    RecyclerView recyclerView;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -70,22 +69,21 @@ public class ContactFragment extends Fragment {
 
         // Set the adapter
         Context context = view.getContext();
-        RecyclerView recyclerView = (RecyclerView) view;
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new MyContactRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Regions/location_id_here/briefs");
+        DatabaseReference myRef = database.getReference("Regions/location_id_here/contacts");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                ArrayList<Briefing> briefs = new ArrayList<Briefing>();
+                ArrayList<Contact> contacts = new ArrayList<Contact>();
                 for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                    Briefing briefing = messageSnapshot.getValue(Briefing.class);
-                    briefs.add(briefing);
+                    Contact contact = messageSnapshot.getValue(Contact.class);
+                    contacts.add(contact);
                 }
-                recyclerView.setAdapter(new BriefRecyclerViewAdapter(briefs, getActivity(), mListener));
+                recyclerView.setAdapter(new ContactRecyclerViewAdapter(contacts, getActivity(), mListener));
 
             }
 
