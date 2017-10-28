@@ -85,31 +85,37 @@ html(lang='en')
                             // /.panel-heading
                             .panel-body
                                 ul.timeline
-                                    li
-                                        .timeline-badge
-                                        .timeline-panel
-                                            .timeline-heading
-                                                h4.timeline-title High Risk of Terrorist Attacks
-                                                p
-                                                    small.text-muted
-                                                        i.fa.fa-clock-o
-                                                        |  11 hours ago via Twitter
-                                            .timeline-body
-                                                p
-                                                    | Advisory System: High
-                                                    This is a test of Rescue's emergency alert system. If you have received this in error, send email to rescue.org
-                                    li.timeline-inverted
-                                        .timeline-badge.warning
-                                        .timeline-panel
-                                            .timeline-heading
-                                                h4.timeline-title Significant Risk of Terrorist Attacks
-                                                p
-                                                    small.text-muted
-                                                        i.fa.fa-clock-o
-                                                        |  11 hours ago via Twitter
-                                            .timeline-body
-                                                p
-                                                    | Advisory System: Elevated \nEMERGENCY! A new threat of terrorist attack has occured.
+                                    each it, i in briefs 
+                                        if i % 2 == 0
+                                            li.timeline-inverted
+                                                .timeline-badge
+                                                .timeline-panel
+                                                    .timeline-heading
+                                                        h4.timeline-title=it.title
+                                                        p
+                                                            small.text-muted
+                                                                i.fa.fa-clock-o
+                                                                |  11 hours ago via Twitter
+                                                    .timeline-body
+                                                        p
+                                                            | Advisory System: #{it.urgency_str}
+                                                            #{it.title}
+                                        else
+                                            li
+                                                .timeline-badge
+                                                .timeline-panel
+                                                    .timeline-heading
+                                                        h4.timeline-title=it.title
+                                                        p
+                                                            small.text-muted
+                                                                i.fa.fa-clock-o
+                                                                |  11 hours ago via Twitter
+                                                    .timeline-body
+                                                        p
+                                                            | Advisory System: #{it.urgency_str}
+                                                            #{it.title}
+                                        
+                               
                             // /.panel-body
                         // /.panel
                     // /.col-lg-8
