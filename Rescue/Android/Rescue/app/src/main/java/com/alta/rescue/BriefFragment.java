@@ -54,36 +54,32 @@ public class BriefFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.brief_item_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            //TODO: dynamically change country.
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("Regions/location_id_here/briefs");
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    ArrayList<Briefing> briefs = new ArrayList<Briefing>();
-                    for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
-                        Briefing briefing = messageSnapshot.getValue(Briefing.class);
-                        briefs.add(briefing);
-                    }
-                    recyclerView.setAdapter(new BriefRecyclerViewAdapter(briefs, mListener));
-
+        Context context = view.getContext();
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        //TODO: dynamically change country.
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Regions/location_id_here/briefs");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                ArrayList<Briefing> briefs = new ArrayList<Briefing>();
+                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                    Briefing briefing = messageSnapshot.getValue(Briefing.class);
+                    briefs.add(briefing);
                 }
+                recyclerView.setAdapter(new BriefRecyclerViewAdapter(briefs, mListener));
 
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "Failed to read value.", error.toException());
-                }
-            });
-        }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
         return view;
     }
 

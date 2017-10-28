@@ -10,18 +10,21 @@ import java.util.Date;
  */
 
 public class Agent {
-    public Agent(String first, String last, Long phone, String country_id, LatLng last_location, long last_ping) {
+    public Agent(String first, String last, Long phone){
         this.first = first;
         this.last = last;
         this.phone = phone;
-        this.country_id = country_id;
+    }
+    public Agent(String first, String last, Long phone, LatLng last_location, long last_ping) {
+        this.first = first;
+        this.last = last;
+        this.phone = phone;
         this.last_location = last_location;
         this.last_ping = last_ping;
     }
     String first;
     String last;
     Long phone;
-    String country_id;
     LatLng last_location;
     long last_ping;
 }

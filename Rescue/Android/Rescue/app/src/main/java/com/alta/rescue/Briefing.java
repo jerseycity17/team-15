@@ -1,10 +1,5 @@
 package com.alta.rescue;
 
-import java.util.Date;
-
-/**
- * Created by David Margolin on 10/27/2017.
- */
 
 public class Briefing {
     public Briefing(){
