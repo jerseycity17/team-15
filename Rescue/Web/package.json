@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^2.5.7",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "firebase": "^4.6.0",
+    "pug": "^2.0.0-rc.4"
   }
 }
