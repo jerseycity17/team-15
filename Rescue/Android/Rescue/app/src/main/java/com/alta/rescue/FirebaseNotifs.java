@@ -1,8 +1,5 @@
 package com.alta.rescue;
 
-import android.app.IntentService;
-import android.content.Intent;
-import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;

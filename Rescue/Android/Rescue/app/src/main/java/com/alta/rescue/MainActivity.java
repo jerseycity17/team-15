@@ -1,19 +1,21 @@
 package com.alta.rescue;
 
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.location.LocationRequest;
@@ -38,7 +40,8 @@ public class MainActivity extends EasyLocationAppCompatActivity {
     int currentview;
     TextView alert;
     DatabaseReference pingtime;
-    DatabaseReference pinglocation;
+    DatabaseReference pinglocationlong;
+    DatabaseReference pinglocationlat;
     DatabaseReference safeRef;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -72,6 +75,27 @@ public class MainActivity extends EasyLocationAppCompatActivity {
         setContentView(R.layout.activity_main);
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(ContextCompat.getColor(this,android.R.color.white));
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.countries_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(2);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+                PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit().putString("Country", getResources().getStringArray(R.array.countries_array)[pos]).commit();
+                int selected = currentview;
+                currentview = currentview+500;
+                navigation.setSelectedItemId(selected);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //lolno
+            }
+
+        });
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         alert=(TextView)findViewById(R.id.alert);
@@ -82,8 +106,10 @@ public class MainActivity extends EasyLocationAppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         safeRef = database.getReference("Users/" + user.getUid().toString() + "/safetyCheck");
-        pinglocation = database.getReference("Users/" + user.getUid().toString() + "/last_ping");
-        pingtime = database.getReference("Users/" + user.getUid().toString() + "/last_location");
+        pingtime = database.getReference("Users/" + user.getUid().toString() + "/last_ping");
+        pinglocationlat = database.getReference("Users/" + user.getUid().toString() + "/last_location/latitude");
+        pinglocationlong = database.getReference("Users/" + user.getUid().toString() + "/last_location/longitude");
+
 
 
         safeRef.addValueEventListener(new ValueEventListener() {
@@ -99,20 +125,8 @@ public class MainActivity extends EasyLocationAppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-        //userRef.child();
-        //FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
- //       userRef.setValue(new Agent("David","Margolin",3472338802L,new LatLng(25.345345,23.23423),4489484L));
-//        DatabaseReference locationRef = database.getReference("Regions/location_id_here");
-//        ArrayList<Briefing> brief = new ArrayList<Briefing>();
-//        brief.add(new Briefing("brief1_title","brief1_text", 51651516L,5));
-//        ArrayList<String> agents = new ArrayList<String>();
-//        agents.add("Userid1");
-//        agents.add("Userid3");
-//        locationRef.setValue(new Region("Russia",brief,agents));
-
     }
 
     @Override
@@ -179,9 +193,11 @@ public class MainActivity extends EasyLocationAppCompatActivity {
 
     @Override
     public void onLocationReceived(Location location) {
+        Log.e("location received", "yay");
         safeRef.setValue(0);
-        pinglocation.setValue(location);
-        pingtime.setValue(new SimpleDateFormat("YYYYMMDD").format(java.util.Calendar.getInstance().getTime()));
+        pinglocationlat.setValue(location.getLatitude());
+        pinglocationlong.setValue(location.getLongitude());
+        pingtime.setValue(new SimpleDateFormat("yyyyMMdd").format(java.util.Calendar.getInstance().getTime()));
     }
 
     @Override
@@ -194,6 +210,8 @@ public class MainActivity extends EasyLocationAppCompatActivity {
         Log.e("location prov disabled", "boo");
 
     }
+
+
 
 }
 
