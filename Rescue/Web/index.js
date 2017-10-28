@@ -54,7 +54,10 @@ app.get('/', function(req, res) {
 	// res.render('login.pug', {
 	// 	title: 'Login'
 	// });
-	renderPage('some title', 'content.pug', res);
+	// renderPage('some title', 'content.pug', res);
+	res.render('login.pug', {
+		title: 'Login',
+	});
 	// res.sendfile(__dirname + '/views/index.html');
 });
 
@@ -68,7 +71,10 @@ app.post('/login', function(req, res) {
 	    var errorMessage = error.message;
 	});
 	console.log("Logged in as " + email);
-	renderPage('Communication', 'communication.pug', res);
+	// renderPage('Communication', 'communication.pug', res);
+	res.render('communication.pug', {
+		title: 'Communication',
+	});
 });
 
 app.post('/register', function(req, res) {
@@ -89,7 +95,11 @@ app.post('/register', function(req, res) {
 			phone: phone
 		});
 	});
-	renderPage('Communication', 'communication.pug', res);
+	// renderPage('Communication', 'communication.pug', res);
+
+	res.render('communication.pug', {
+		title: 'Communication',
+	});
 
 	// res.render('briefings', {title: 'Briefings'});
 	console.log("Created new user with email " + email);
@@ -108,23 +118,28 @@ app.post('/logout', function(req, res) {
 });
 
 app.get('/communication', function(req, res) {
-	// renderPage('Communication', 'communication.pug', res);
-	// counts = [];
-	// firebase.database().ref('Regions/location_id_here/briefs').on('value',function(snap) {
-	// 	keys = [];
-	//     snap.forEach(function(item) {
-	//         var itemVal = item.val();
-	//         keys.push(itemVal);
-	//     });
-	//     for (i=0; i < keys.length; i++) {
-	//         counts.push(keys[i].wordcount);
-	//     }   
-	// });
-	// console.log(counts);
-	res.render('communication.pug', {
-		title: 'Communication',
-		// briefs: firebase.database().ref('Regions/location_id_here/briefs')
+	firebase.database().ref('Regions/location_id_here/briefs').once('value', function(snapshot)
+	{
+	    let c = 0;
+	    let children = [];
+	    snapshot.forEach(function(childSnapshot) {
+	        children.push(childSnapshot.val());    
+	        c++;
+	        
+	        if (c >= childSnapshot.numChildren())
+	        {
+				res.render('communication.pug', {
+					title: 'Communication',
+	                briefs: children
+				});
+	        }
+	    });
+	    
 	});
+	// res.render('communication.pug', {
+	// 	title: 'Communication',
+	// 	// briefs: firebase.database().ref('Regions/location_id_here/briefs')
+	// });
 })
 
 app.get('/analysis', function(req, res) {
