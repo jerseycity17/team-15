@@ -6,7 +6,7 @@ const firebase = require('firebase');
 var app = express();
 
 // View Engine
-app.set('view engine', 'html');
+app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // Body Parser Middleware
@@ -36,10 +36,10 @@ firebase.initializeApp(config);
 
 app.get('/', function(req, res) {
 	// res.send('Hello World');
-	// res.render('index', {
-	// 	title: 'Login'
-	// });
-	res.sendfile(__dirname + '/views/index.html');
+	res.render('page', {
+		title: 'Login'
+	});
+	// res.sendfile(__dirname + '/views/index.html');
 });
 
 app.post('/login', function(req, res) {
