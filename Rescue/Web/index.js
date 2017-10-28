@@ -92,7 +92,8 @@ app.post('/register', function(req, res) {
 		firebase.database().ref('Users/' + userId).set({
 			first: first,
 			last: last,
-			phone: phone
+			phone: phone,
+			safetyCheck: 1
 		});
 	});
 	// renderPage('Communication', 'communication.pug', res);
