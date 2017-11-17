@@ -1,3 +1,3 @@
-Team 15 - Code for Good. 
+Team 15  Code for Good. 
 
 React App
